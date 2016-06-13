@@ -1,0 +1,6 @@
+name = "Availability Calendar Rules"
+description = "Provides rules actions to allow the setting of Availabilty Calendar states via Rules."
+package = Rules
+core = 7.x
+dependencies[] = availability_calendar
+dependencies[] = rules

@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * Adds a rules action to set the availability on nodes with Availability Calendar fields.
+ *
+ * Extends the Availability Calendars Module.
+ *
+ */
+
+/**
+ * Implement hook_help().
+ */
+function availability_calendars_rules_help($path, $arg) {
+  if ($path == 'admin/help#availability_calendars_rules') {
+  return t('Adds a rules action to set the availability on nodes with Availability Calendar fields.');
+  }
+} 
+
+function availability_calendars_rules_init() {
+  module_load_include('inc', 'availability_calendar', 'availability_calendar');
+}
+
+/**
+ * Implement hook_rules_action_info().
+ */
+function availability_calendars_rules_rules_action_info() {
+	
+  return array(
+    'availability_calendars_rules_rules_action_set_availability_status' => array(
+      'label' => t('Set an Availability Calendar Status'),
+      'group' => t('Availability Calendar'),
+      'parameter' => array(
+        'updated_calendar' => array(
+          'type' => 'integer',
+          'label' => t('The calendar to update'),
+          'description' => t('Choose the calendar CID to set the availability on.'),
+        ),
+		'start_date' => array(
+          'type' => 'date',
+          'label' => t('Start Date'),
+          'description' => t('Enter a value for the start date.'),
+        ),
+        'end_date' => array(
+          'type' => 'date',
+          'label' => t('End Date'),
+          'description' => t('Enter a value for the end date. If no end date field is available, select "Switch to data selection" and use the same start date but with an offset.'),
+        ),
+        'status' => array(
+          'type' => 'text',
+          'label' => t('Status'),
+          'description' => t('Choose the status to set.'),
+          'options list' => 'availability_calendars_rules_get_states',
+          'restriction' => 'input',
+        ),
+      ),
+      'provides' => array(
+        'availability_status' => array(
+          'type' => 'text',
+          'label' => t('Availability Status'),
+        ),
+      ),
+    ),
+  );
+}
+
+function availability_calendars_rules_get_states() {
+	
+  $options = array();
+  $states = availability_calendar_get_states();
+  
+  foreach ($states as $option){
+    $options[$option['sid']] = $option['label'];
+  }
+  
+  return $options;
+}
+ 
+// Set the new status for the chosen Start and End dates.
+function availability_calendars_rules_rules_action_set_availability_status($updated_calendar, $start_date, $end_date, $status) {
+    
+  // get the fields we need.
+    $cid = $updated_calendar; 
+	$sid = $status;
+    $from = date('Y-m-d H:i:s', $start_date);
+	$from = DateTime::createFromFormat("Y-m-d H:i:s", $from);
+    $to = date('Y-m-d H:i:s', $end_date);
+	$to = DateTime::createFromFormat("Y-m-d H:i:s", $to);
+	
+    // change the state to the one selected;
+    availability_calendar_update_availability($cid, $sid, $from, $to);
+
+    drupal_set_message('Status has been set to '. $sid);
+ 
+}
