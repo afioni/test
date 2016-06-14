@@ -36,11 +36,11 @@ function availability_calendars_rules_rules_action_info() {
           'label' => t('The calendar to update'),
           'description' => t('Choose the calendar CID to set the availability on.'),
         ),
-		'start_date' => array(
-          'type' => 'date',
-          'label' => t('Start Date'),
-          'description' => t('Enter a value for the start date.'),
-        ),
+        'start_date' => array(
+		  'type' => 'date',
+		  'label' => t('Start Date'),
+		  'description' => t('Enter a value for the start date.'),
+		),
         'end_date' => array(
           'type' => 'date',
           'label' => t('End Date'),
@@ -65,20 +65,17 @@ function availability_calendars_rules_rules_action_info() {
 }
 
 function availability_calendars_rules_get_states() {
-	
   $options = array();
   $states = availability_calendar_get_states();
-  
   foreach ($states as $option){
     $options[$option['sid']] = $option['label'];
   }
-  
   return $options;
 }
- 
+
 // Set the new status for the chosen Start and End dates.
 function availability_calendars_rules_rules_action_set_availability_status($updated_calendar, $start_date, $end_date, $status) {
-    
+
   // Get the fields we need.
   $cid = $updated_calendar; 
   $sid = $status;
@@ -86,7 +83,7 @@ function availability_calendars_rules_rules_action_set_availability_status($upda
   $from = DateTime::createFromFormat("Y-m-d H:i:s", $from);
   $to = date('Y-m-d H:i:s', $end_date);
   $to = DateTime::createFromFormat("Y-m-d H:i:s", $to);
-	
+
   // Change the state to the one selected.
   availability_calendar_update_availability($cid, $sid, $from, $to);
  
