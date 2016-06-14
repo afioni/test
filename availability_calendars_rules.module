@@ -2,18 +2,16 @@
 
 /**
  * @file
- * Adds a rules action to set the availability on nodes with Availability Calendar fields.
- *
+ * Add a rule to set the availability for entities with Availability Calendars.
  * Extends the Availability Calendars Module.
- *
  */
 
 /**
- * Implement hook_help().
+ * Implements hook_help().
  */
 function availability_calendars_rules_help($path, $arg) {
   if ($path == 'admin/help#availability_calendars_rules') {
-  return t('Adds a rules action to set the availability on nodes with Availability Calendar fields.');
+    return t('Adds a rules action to set the availability on nodes with Availability Calendar fields.');
   }
 } 
 
@@ -22,7 +20,7 @@ function availability_calendars_rules_init() {
 }
 
 /**
- * Implement hook_rules_action_info().
+ * Implements hook_rules_action_info().
  */
 function availability_calendars_rules_rules_action_info() {
 	
@@ -79,17 +77,15 @@ function availability_calendars_rules_get_states() {
 // Set the new status for the chosen Start and End dates.
 function availability_calendars_rules_rules_action_set_availability_status($updated_calendar, $start_date, $end_date, $status) {
     
-  // get the fields we need.
-    $cid = $updated_calendar; 
-	$sid = $status;
-    $from = date('Y-m-d H:i:s', $start_date);
-	$from = DateTime::createFromFormat("Y-m-d H:i:s", $from);
-    $to = date('Y-m-d H:i:s', $end_date);
-	$to = DateTime::createFromFormat("Y-m-d H:i:s", $to);
+  // Get the fields we need.
+  $cid = $updated_calendar; 
+  $sid = $status;
+  $from = date('Y-m-d H:i:s', $start_date);
+  $from = DateTime::createFromFormat("Y-m-d H:i:s", $from);
+  $to = date('Y-m-d H:i:s', $end_date);
+  $to = DateTime::createFromFormat("Y-m-d H:i:s", $to);
 	
-    // change the state to the one selected;
-    availability_calendar_update_availability($cid, $sid, $from, $to);
-
-    drupal_set_message('Status has been set to '. $sid);
+  // Change the state to the one selected.
+  availability_calendar_update_availability($cid, $sid, $from, $to);
  
 }
