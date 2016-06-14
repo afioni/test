@@ -41,10 +41,10 @@ function availability_calendars_rules_rules_action_info() {
           'description' => t('Enter a value for the start date.'),
         ),
         'end_date' => array(
-		  'type' => 'date',
-		  'label' => t('End Date'),
-		  'description' => t('Enter a value for the end date. If no end date field is available, select "Switch to data selection" and use the same start date but with an offset.'),
-		),
+          'type' => 'date',
+          'label' => t('End Date'),
+          'description' => t('Enter a value for the end date. If no end date field is available, select "Switch to data selection" and use the same start date but with an offset.'),
+        ),
         'status' => array(
           'type' => 'text',
           'label' => t('Status'),
