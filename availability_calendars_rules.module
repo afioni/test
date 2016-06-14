@@ -3,7 +3,6 @@
 /**
  * @file
  * Add a rule to set the availability for entities with Availability Calendars.
- * Extends the Availability Calendars Module.
  */
 
 /**
@@ -64,16 +63,21 @@ function availability_calendars_rules_rules_action_info() {
   );
 }
 
+/**
+ * Custom function to get the Availability Calenars States.
+ */
 function availability_calendars_rules_get_states() {
   $options = array();
   $states = availability_calendar_get_states();
-  foreach ($states as $option){
+  foreach ($states as $option) {
     $options[$option['sid']] = $option['label'];
   }
   return $options;
 }
 
-// Set the new status for the chosen Start and End dates.
+/**
+ * Set the new status for the chosen Start and End dates.
+ */
 function availability_calendars_rules_rules_action_set_availability_status($updated_calendar, $start_date, $end_date, $status) {
 
   // Get the fields we need.
