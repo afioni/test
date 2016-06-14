@@ -13,8 +13,11 @@ function availability_calendars_rules_help($path, $arg) {
   if ($path == 'admin/help#availability_calendars_rules') {
     return t('Adds a rules action to set the availability on nodes with Availability Calendar fields.');
   }
-} 
+}
 
+/**
+ * Implements hook_init().
+ */
 function availability_calendars_rules_init() {
   module_load_include('inc', 'availability_calendar', 'availability_calendar');
 }
@@ -23,7 +26,6 @@ function availability_calendars_rules_init() {
  * Implements hook_rules_action_info().
  */
 function availability_calendars_rules_rules_action_info() {
-	
   return array(
     'availability_calendars_rules_rules_action_set_availability_status' => array(
       'label' => t('Set an Availability Calendar Status'),
